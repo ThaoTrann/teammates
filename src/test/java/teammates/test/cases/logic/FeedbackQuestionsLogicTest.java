@@ -44,6 +44,7 @@ public class FeedbackQuestionsLogicTest extends BaseComponentTestCase {
         testGetFeedbackQuestionsForInstructor();
         testGetFeedbackQuestionsForStudents();
         testGetFeedbackQuestionsForStudent();
+        testGetFeedbackQuestionsWithCustomFeedbackPaths();
         testIsQuestionHasResponses();
         testIsQuestionAnswered();
         testUpdateQuestionNumber();
@@ -655,6 +656,22 @@ public class FeedbackQuestionsLogicTest extends BaseComponentTestCase {
         expectedQuestions.add(getQuestionFromDatastore("custom.feedback.paths.team.question"));
         
         actualQuestions = fqLogic.getFeedbackQuestionsForStudent(allQuestions, student);
+        
+        assertEquals(actualQuestions, expectedQuestions);
+    }
+    
+    public void testGetFeedbackQuestionsWithCustomFeedbackPaths() {
+        List<FeedbackQuestionAttributes> expectedQuestions;
+        List<FeedbackQuestionAttributes> actualQuestions;
+        
+        ______TS("Get questions with custom feedback paths from session");
+        expectedQuestions = new ArrayList<FeedbackQuestionAttributes>();
+        expectedQuestions.add(getQuestionFromDatastore("custom.feedback.paths.student.question"));
+        expectedQuestions.add(getQuestionFromDatastore("custom.feedback.paths.instructor.question"));
+        expectedQuestions.add(getQuestionFromDatastore("custom.feedback.paths.team.question"));
+        
+        actualQuestions = fqLogic.getFeedbackQuestionsWithCustomFeedbackPaths(
+                "First feedback session", "idOfTypicalCourse1");
         
         assertEquals(actualQuestions, expectedQuestions);
     }
