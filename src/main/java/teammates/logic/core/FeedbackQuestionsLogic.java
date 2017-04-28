@@ -208,7 +208,7 @@ public class FeedbackQuestionsLogic {
     }
     
     /**
-     * Gets questions for the given session where the student or his/her team is a custom recipient
+     * Gets questions with custom feedback paths from the given session
      * @throws EntityDoesNotExistException 
      */
     public List<FeedbackQuestionAttributes> getFeedbackQuestionsWithCustomFeedbackPaths(
