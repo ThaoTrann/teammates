@@ -375,10 +375,6 @@ public class FeedbackResponsesLogic {
                 return true;
             }
             
-            if (question.hasTeamAsGiverInFeedbackPaths(student.getTeam())) {
-                return true;
-            }
-            
             TeamDetailsBundle studentTeamDetails = studentsLogic.getTeamDetailsForStudent(student);
             if (question.isResponseVisibleTo(FeedbackParticipantType.OWN_TEAM_MEMBERS)) {
                 for (StudentAttributes teamMember : studentTeamDetails.students) {
