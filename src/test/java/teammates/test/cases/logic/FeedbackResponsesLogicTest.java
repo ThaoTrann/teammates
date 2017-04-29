@@ -55,6 +55,7 @@ public class FeedbackResponsesLogicTest extends BaseComponentTestCase {
     @Test
     public void allTests() throws Exception {
         testIsNameVisibleTo();
+        testIsResponseOfFeedbackQuestionVisibleToStudent();
         testGetViewableResponsesForQuestionInSection();
         testUpdateFeedbackResponse();
         testUpdateFeedbackResponsesForChangingTeam();
@@ -576,6 +577,74 @@ public class FeedbackResponsesLogicTest extends BaseComponentTestCase {
         
         assertFalse(frLogic.isNameVisibleTo(null, fr, student.email, UserRole.STUDENT, false, roster));
         
+    }
+    
+    public void testIsResponseOfFeedbackQuestionVisibleToStudent() {
+        StudentAttributes student;
+        FeedbackQuestionAttributes fq;
+        
+        ______TS("test if response is visible to students");
+        
+        student = typicalBundle.students.get("student5InCourse1");
+        fq = getQuestionFromDatastore("qn3InSession1InCourse1");
+        
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is visible to custom student recipient");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.student1tostudent5.question");
+        
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is visible to member of custom team recipient");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.team1.1toteam1.2.question");
+        
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is visible to custom student giver's team member");
+        
+        student = typicalBundle.students.get("student2InCourse1");
+        fq = getQuestionFromDatastore("custom.feedback.paths.student1tostudent5.question");
+        
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is visible to custom student recipient's team member");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.student5tostudent1.question");
+        
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is not visible to students");
+        
+        fq = getQuestionFromDatastore("qn1InSession1InCourse1");
+        
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is not visible to student who is not a custom student recipient");
+        
+        student = typicalBundle.students.get("student6InCourse1");
+        fq = getQuestionFromDatastore("custom.feedback.paths.student1tostudent5.question");
+        
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is not visible to student who is not a member of custom team recipient");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.team1.1toteam1.2.question");
+        
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is not visible to student who is not custom student giver's team member");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.student1tostudent5.question");
+        
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
+        
+        ______TS("test if response is not visible to student who is not custom student recipient's team member");
+        
+        fq = getQuestionFromDatastore("custom.feedback.paths.student5tostudent1.question");
+        
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(fq, student));
     }
 
     public void testDeleteFeedbackResponsesForStudent() throws Exception {

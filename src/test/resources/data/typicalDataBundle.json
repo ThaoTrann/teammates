@@ -542,6 +542,15 @@
       "team": "Team 1.2",
       "section": "Section 2"
     },
+    "student6InCourse1": {
+      "googleId": "student6InCourse1",
+      "email": "student6InCourse1@gmail.tmt",
+      "course": "idOfTypicalCourse1",
+      "name": "student6 In Course1",
+      "comments": "",
+      "team": "Team 1.3",
+      "section": "Section 2"
+    },
     "student1InCourse2": {
       "googleId": "student1InCourse2",
       "email": "student1InCourse2@gmail.tmt",
@@ -965,6 +974,62 @@
             {"courseId":"idOfTypicalCourse1","giver":"student5InCourse1@gmail.tmt (Student)","recipient":"student5InCourse1@gmail.tmt (Student)"}
         ]
     },
+    "custom.feedback.paths.student1tostudent5.question":{
+        "feedbackSessionName":"First feedback session",
+        "courseId":"idOfTypicalCourse1",
+        "creatorEmail":"instructor1@course1.tmt",
+        "questionMetaData":{
+            "value":"A particular student's feedback about another student's progress"
+        },
+        "questionNumber":"7",
+        "questionType":"TEXT",
+        "giverType":"CUSTOM",
+        "recipientType":"CUSTOM",
+        "numberOfEntitiesToGiveFeedbackTo":-100,
+        "showResponsesTo":[
+            "RECEIVER",
+            "OWN_TEAM_MEMBERS"
+        ],
+        "showGiverNameTo":[
+            "RECEIVER",
+            "OWN_TEAM_MEMBERS"    
+        ],
+        "showRecipientNameTo":[
+            "RECEIVER",
+            "OWN_TEAM_MEMBERS"
+        ],
+        "feedbackPaths":[
+            {"courseId":"idOfTypicalCourse1","giver":"student1InCourse1@gmail.tmt (Student)","recipient":"student5InCourse1@gmail.tmt (Student)"}
+        ]
+    },
+    "custom.feedback.paths.student5tostudent1.question":{
+        "feedbackSessionName":"First feedback session",
+        "courseId":"idOfTypicalCourse1",
+        "creatorEmail":"instructor1@course1.tmt",
+        "questionMetaData":{
+            "value":"A particular student's feedback about another student's progress"
+        },
+        "questionNumber":"8",
+        "questionType":"TEXT",
+        "giverType":"CUSTOM",
+        "recipientType":"CUSTOM",
+        "numberOfEntitiesToGiveFeedbackTo":-100,
+        "showResponsesTo":[
+            "RECEIVER",
+            "RECEIVER_TEAM_MEMBERS"
+        ],
+        "showGiverNameTo":[
+            "RECEIVER",
+            "RECEIVER_TEAM_MEMBERS"    
+        ],
+        "showRecipientNameTo":[
+            "RECEIVER",
+            "RECEIVER_TEAM_MEMBERS"
+        ],
+        "feedbackPaths":[
+            {"courseId":"idOfTypicalCourse1","giver":"student5InCourse1@gmail.tmt (Student)","recipient":"student1InCourse1@gmail.tmt (Student)"}
+        ]
+    },
     "custom.feedback.paths.instructor.question":{
         "feedbackSessionName":"First feedback session",
         "courseId":"idOfTypicalCourse1",
@@ -972,7 +1037,7 @@
         "questionMetaData":{
             "value":"A particular instructor's feedback about their own progress"
         },
-        "questionNumber":"7",
+        "questionNumber":"9",
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1006,7 +1071,7 @@
         "questionMetaData":{
             "value":"A particular team's feedback about their own progress"
         },
-        "questionNumber":"8",
+        "questionNumber":"10",
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1031,6 +1096,31 @@
         ],
         "feedbackPaths":[
             {"courseId":"idOfTypicalCourse1","giver":"Team 1.2 (Team)","recipient":"Team 1.2 (Team)"}
+        ]
+    },
+    "custom.feedback.paths.team1.1toteam1.2.question":{
+        "feedbackSessionName":"First feedback session",
+        "courseId":"idOfTypicalCourse1",
+        "creatorEmail":"instructor1@course1.tmt",
+        "questionMetaData":{
+            "value":"A particular team's feedback about another team's progress"
+        },
+        "questionNumber":"11",
+        "questionType":"TEXT",
+        "giverType":"CUSTOM",
+        "recipientType":"CUSTOM",
+        "numberOfEntitiesToGiveFeedbackTo":-100,
+        "showResponsesTo":[
+            "RECEIVER"
+        ],
+        "showGiverNameTo":[
+            "RECEIVER"
+        ],
+        "showRecipientNameTo":[
+            "RECEIVER"
+        ],
+        "feedbackPaths":[
+            {"courseId":"idOfTypicalCourse1","giver":"Team 1.1 (Team)","recipient":"Team 1.2 (Team)"}
         ]
     },
     "team.feedback": {
