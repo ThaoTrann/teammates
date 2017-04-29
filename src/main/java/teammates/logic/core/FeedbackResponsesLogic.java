@@ -352,10 +352,12 @@ public class FeedbackResponsesLogic {
             return true;
         }
         if (question.giverType == FeedbackParticipantType.TEAMS
-                || question.isResponseVisibleTo(FeedbackParticipantType.OWN_TEAM_MEMBERS)) {
+                || question.isResponseVisibleTo(FeedbackParticipantType.OWN_TEAM_MEMBERS)
+                        && question.giverType.equals(FeedbackParticipantType.STUDENTS)) {
             return true;
         }
-        return question.isResponseVisibleTo(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS);
+        return question.isResponseVisibleTo(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS)
+                && question.giverType.equals(FeedbackParticipantType.STUDENTS);
     }
     
     /**
