@@ -1446,7 +1446,7 @@
     "response1ForQ7S1C1":{
         "feedbackSessionName":"First feedback session",
         "courseId":"idOfTypicalCourse1",
-        "feedbackQuestionId":"7",
+        "feedbackQuestionId":"9",
         "feedbackQuestionType":"TEXT",
         "giver":"instructor2@course1.tmt",
         "recipient":"instructor2@course1.tmt",
@@ -1460,7 +1460,7 @@
     "response1ForQ8S1C1":{
         "feedbackSessionName":"First feedback session",
         "courseId":"idOfTypicalCourse1",
-        "feedbackQuestionId":"8",
+        "feedbackQuestionId":"10",
         "feedbackQuestionType":"TEXT",
         "giver":"student5InCourse1@gmail.tmt",
         "recipient":"Team 1.2",

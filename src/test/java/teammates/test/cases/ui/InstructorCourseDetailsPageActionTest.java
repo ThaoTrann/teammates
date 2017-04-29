@@ -48,8 +48,8 @@ public class InstructorCourseDetailsPageActionTest extends BaseActionTest {
 
         assertEquals("idOfTypicalCourse1", pageData.getCourseDetails().course.getId());
         assertEquals("Typical Course 1 with 2 Evals", pageData.getCourseDetails().course.getName());
-        assertEquals(2, pageData.getCourseDetails().stats.teamsTotal);
-        assertEquals(5, pageData.getCourseDetails().stats.studentsTotal);
+        assertEquals(3, pageData.getCourseDetails().stats.teamsTotal);
+        assertEquals(6, pageData.getCourseDetails().stats.studentsTotal);
         assertEquals(0, pageData.getCourseDetails().stats.unregisteredTotal);
         assertEquals(0, pageData.getCourseDetails().feedbackSessions.size());
 
@@ -166,6 +166,14 @@ public class InstructorCourseDetailsPageActionTest extends BaseActionTest {
                              + "<td>Course1</td>\n"
                              + "<td>Joined</td>\n"
                              + "<td>student5InCourse1@gmail.tmt</td>\n"
+                         + "</tr>"
+                         + "<tr>"
+                             + "<td>Section 2</td>\n"
+                             + "<td>Team 1.3</td>\n"
+                             + "<td>student6 In Course1</td>\n"
+                             + "<td>Course1</td>\n"
+                             + "<td>Joined</td>\n"
+                             + "<td>student6InCourse1@gmail.tmt</td>\n"
                          + "</tr>"
                      + "</table>",
                      pageData.getStudentListHtmlTableAsString());
