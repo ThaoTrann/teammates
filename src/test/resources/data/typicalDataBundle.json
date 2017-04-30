@@ -1443,7 +1443,7 @@
         "recipientSection":"Section 2" 
         
     },
-    "response1ForQ7S1C1":{
+    "response1ForQ9S1C1":{
         "feedbackSessionName":"First feedback session",
         "courseId":"idOfTypicalCourse1",
         "feedbackQuestionId":"9",
@@ -1457,7 +1457,7 @@
         "recipientSection":"None" 
         
     },
-    "response1ForQ8S1C1":{
+    "response1ForQ10S1C1":{
         "feedbackSessionName":"First feedback session",
         "courseId":"idOfTypicalCourse1",
         "feedbackQuestionId":"10",
