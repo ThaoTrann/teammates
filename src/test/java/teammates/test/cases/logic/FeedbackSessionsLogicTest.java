@@ -68,7 +68,6 @@ public class FeedbackSessionsLogicTest extends BaseComponentTestCase {
         testGetFeedbackSessionQuestionsForInstructor();
         testGetFeedbackSessionResultsForUser();
         testGetFeedbackSessionResultsSummaryAsCsv();
-        testIsFeedbackSessionViewableToStudents();
         
         testCreateAndDeleteFeedbackSession();
         testCopyFeedbackSession();
@@ -76,10 +75,8 @@ public class FeedbackSessionsLogicTest extends BaseComponentTestCase {
         testUpdateFeedbackSession();
         testPublishUnpublishFeedbackSession();
         
-        testIsFeedbackSessionHasQuestionForStudents();
         testIsFeedbackSessionCompletedByStudent();
         testIsFeedbackSessionCompletedByInstructor();
-        testIsFeedbackSessionFullyCompletedByStudent();
                 
         testDeleteFeedbackSessionsForCourse();
     }
@@ -99,34 +96,6 @@ public class FeedbackSessionsLogicTest extends BaseComponentTestCase {
         AssertHelper.assertSameContentIgnoreOrder(
                 finalFsa, fsLogic.getFeedbackSessionsListForInstructor(instructorGoogleId, false));
         
-    }
-    
-    public void testIsFeedbackSessionHasQuestionForStudents() throws Exception {
-        // no need to removeAndRestoreTypicalDataInDatastore() as the previous test does not change the db
-        
-        FeedbackSessionAttributes sessionWithStudents = dataBundle.feedbackSessions.get("gracePeriodSession");
-        FeedbackSessionAttributes sessionWithoutStudents = dataBundle.feedbackSessions.get("closedSession");
-        
-        ______TS("non-existent session/courseId");
-        
-        try {
-            fsLogic.isFeedbackSessionHasQuestionForStudents("nOnEXistEnT session", "someCourse");
-            signalFailureToDetectException();
-        } catch (EntityDoesNotExistException edne) {
-            assertEquals("Trying to check a non-existent feedback session: "
-                         + "someCourse" + "/" + "nOnEXistEnT session",
-                         edne.getMessage());
-        }
-        
-        ______TS("session contains students");
-        
-        assertTrue(fsLogic.isFeedbackSessionHasQuestionForStudents(sessionWithStudents.getFeedbackSessionName(),
-                                                                   sessionWithStudents.getCourseId()));
-        
-        ______TS("session does not contain students");
-        
-        assertFalse(fsLogic.isFeedbackSessionHasQuestionForStudents(sessionWithoutStudents.getFeedbackSessionName(),
-                                                                    sessionWithoutStudents.getCourseId()));
     }
     
     public void testGetFeedbackSessionsClosingWithinTimeLimit() throws Exception {
@@ -1780,27 +1749,6 @@ public class FeedbackSessionsLogicTest extends BaseComponentTestCase {
         return FeedbackSessionResultsBundle.getAnonName(FeedbackParticipantType.STUDENTS,
                                                         dataBundle.students.get(studentKey).name);
     }
-
-    public void testIsFeedbackSessionViewableToStudents() {
-        ______TS("Session with questions for students to answer");
-        FeedbackSessionAttributes session = dataBundle.feedbackSessions.get("session1InCourse1");
-        assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
-        
-        ______TS("Session without questions for students, but with visible responses");
-        session = dataBundle.feedbackSessions.get("archiveCourse.session1");
-        assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
-       
-        session = dataBundle.feedbackSessions.get("session2InCourse2");
-        assertTrue(fsLogic.isFeedbackSessionViewableToStudents(session));
-       
-        ______TS("private session");
-        session = dataBundle.feedbackSessions.get("session1InCourse2");
-        assertFalse(fsLogic.isFeedbackSessionViewableToStudents(session));
-        
-        ______TS("empty session");
-        session = dataBundle.feedbackSessions.get("empty.session");
-        assertFalse(fsLogic.isFeedbackSessionViewableToStudents(session));
-    }
     
     public void testUpdateFeedbackSession() throws Exception {
 
@@ -1939,33 +1887,7 @@ public class FeedbackSessionsLogicTest extends BaseComponentTestCase {
         
         assertTrue(fsLogic.isFeedbackSessionCompletedByStudent(fs, student));
     }
-    
-    public void testIsFeedbackSessionFullyCompletedByStudent() throws Exception {
 
-        FeedbackSessionAttributes fs = dataBundle.feedbackSessions.get("session1InCourse1");
-        StudentAttributes student1OfCourse1 = dataBundle.students.get("student1InCourse1");
-        StudentAttributes student3OfCourse1 = dataBundle.students.get("student3InCourse1");
-        
-        ______TS("failure: non-existent feedback session for student");
-        
-        try {
-            fsLogic.isFeedbackSessionFullyCompletedByStudent("nonExistentFSName", fs.getCourseId(), "random.student@email");
-            signalFailureToDetectException();
-        } catch (EntityDoesNotExistException edne) {
-            assertEquals("Trying to check a non-existent feedback session: "
-                         + fs.getCourseId() + "/" + "nonExistentFSName",
-                         edne.getMessage());
-        }
-        
-        ______TS("success case: fully done by student 1");
-        assertTrue(fsLogic.isFeedbackSessionFullyCompletedByStudent(fs.getFeedbackSessionName(), fs.getCourseId(),
-                                                                    student1OfCourse1.email));
-        
-        ______TS("success case: partially done by student 3");
-        assertFalse(fsLogic.isFeedbackSessionFullyCompletedByStudent(fs.getFeedbackSessionName(), fs.getCourseId(),
-                                                                     student3OfCourse1.email));
-    }
-    
     private FeedbackSessionAttributes getNewFeedbackSession() {
         FeedbackSessionAttributes fsa = new FeedbackSessionAttributes();
         fsa.setFeedbackSessionType(FeedbackSessionType.STANDARD);

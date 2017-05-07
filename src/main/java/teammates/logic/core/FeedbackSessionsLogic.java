@@ -1123,20 +1123,6 @@ public class FeedbackSessionsLogic {
         return fsDb.getFeedbackSession(courseId, feedbackSessionName) != null;
     }
 
-    public boolean isFeedbackSessionHasQuestionForStudents(
-            String feedbackSessionName,
-            String courseId) throws EntityDoesNotExistException {
-        if (!isFeedbackSessionExists(feedbackSessionName, courseId)) {
-            throw new EntityDoesNotExistException(ERROR_NON_EXISTENT_FS_CHECK + courseId + "/" + feedbackSessionName);
-        }
-
-        List<FeedbackQuestionAttributes> allQuestions =
-                fqLogic.getFeedbackQuestionsForStudents(feedbackSessionName,
-                        courseId);
-
-        return !allQuestions.isEmpty();
-    }
-
     public boolean isFeedbackSessionCompletedByStudent(
             FeedbackSessionAttributes fsa, StudentAttributes student) {
         Assumption.assertNotNull(fsa);
@@ -2336,29 +2322,6 @@ public class FeedbackSessionsLogic {
         return new String[] { giverRecipientName, giverRecipientLastName, teamName };
     }
 
-    public boolean isFeedbackSessionFullyCompletedByStudent(
-            String feedbackSessionName,
-            String courseId, String userEmail)
-            throws EntityDoesNotExistException {
-
-        if (!isFeedbackSessionExists(feedbackSessionName, courseId)) {
-            throw new EntityDoesNotExistException(ERROR_NON_EXISTENT_FS_CHECK + courseId + "/" + feedbackSessionName);
-        }
-
-        List<FeedbackQuestionAttributes> allQuestions =
-                fqLogic.getFeedbackQuestionsForStudents(feedbackSessionName,
-                        courseId);
-
-        for (FeedbackQuestionAttributes question : allQuestions) {
-            if (!fqLogic.isQuestionFullyAnsweredByUser(question, userEmail)) {
-                // If any question is not completely answered, session is not
-                // completed
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean isFeedbackSessionFullyCompletedByInstructor(
             String feedbackSessionName,
             String courseId, String userEmail)
@@ -2404,32 +2367,6 @@ public class FeedbackSessionsLogic {
         // Allow viewing if session is viewable to students
         return isFeedbackSessionViewableToStudent(session, userEmail);
     }
-
-    public boolean isFeedbackSessionViewableToStudents(
-            FeedbackSessionAttributes session) {
-        // Allow students to view the feedback session if there are questions for them
-        List<FeedbackQuestionAttributes> questionsToAnswer =
-                fqLogic.getFeedbackQuestionsForStudents(
-                        session.getFeedbackSessionName(), session.getCourseId());
-        
-        if (session.isVisible() && !questionsToAnswer.isEmpty()) {
-            return true;
-        }
-        
-        // Allow students to view the feedback session
-        // if there are any questions for instructors to answer
-        // where the responses of the questions are visible to the students
-        List<FeedbackQuestionAttributes> questionsWithVisibleResponses = new ArrayList<FeedbackQuestionAttributes>();
-        List<FeedbackQuestionAttributes> questionsForInstructors =
-                                        fqLogic.getFeedbackQuestionsForCreatorInstructor(session);
-        for (FeedbackQuestionAttributes question : questionsForInstructors) {
-            if (frLogic.isResponseOfFeedbackQuestionVisibleToStudents(question)) {
-                questionsWithVisibleResponses.add(question);
-            }
-        }
-        
-        return session.isVisible() && !questionsWithVisibleResponses.isEmpty();
-    }
     
     public boolean isFeedbackSessionViewableToStudent(
             FeedbackSessionAttributes session, String userEmail) {
@@ -2473,19 +2410,6 @@ public class FeedbackSessionsLogic {
         }
         
         return false;
-    }
-    
-    /**
-     * Returns true if there are any questions for students to answer.
-     * @param session
-     */
-    public boolean isFeedbackSessionForStudentsToAnswer(FeedbackSessionAttributes session) {
-        
-        List<FeedbackQuestionAttributes> questionsToAnswer =
-                fqLogic.getFeedbackQuestionsForStudents(
-                        session.getFeedbackSessionName(), session.getCourseId());
-        
-        return session.isVisible() && !questionsToAnswer.isEmpty();
     }
 
     private void normalizeMaximumResponseEntities(
