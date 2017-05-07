@@ -2433,41 +2433,46 @@ public class FeedbackSessionsLogic {
     
     public boolean isFeedbackSessionViewableToStudent(
             FeedbackSessionAttributes session, String userEmail) {
-        // Allow student to view the feedback session if there are questions for him/her
-        StudentAttributes student = studentsLogic.getStudentForEmail(session.getCourseId(), userEmail);
-        List<FeedbackQuestionAttributes> questionsToAnswer =
-                fqLogic.getFeedbackQuestionsForStudent(
-                        session.getFeedbackSessionName(), session.getCourseId(), student);
+        if (!session.isVisible()) {
+            return false;
+        }
         
-        if (session.isVisible() && !questionsToAnswer.isEmpty()) {
+        String feedbackSessionName = session.getFeedbackSessionName();
+        String courseId = session.getCourseId();
+        
+        // Allow students to view the feedback session if there are questions for them
+        List<FeedbackQuestionAttributes> questionsToAnswer =
+                fqLogic.getFeedbackQuestionsForStudents(feedbackSessionName, courseId);
+        
+        if (!questionsToAnswer.isEmpty()) {
             return true;
         }
         
         // Allow students to view the feedback session
         // if there are any questions for instructors to answer
         // where the responses of the questions are visible to the students
-        List<FeedbackQuestionAttributes> questionsWithVisibleResponses = new ArrayList<FeedbackQuestionAttributes>();
         List<FeedbackQuestionAttributes> questionsForInstructors =
-                                        fqLogic.getFeedbackQuestionsForCreatorInstructor(session);
+                fqLogic.getFeedbackQuestionsForCreatorInstructor(session);
         for (FeedbackQuestionAttributes question : questionsForInstructors) {
-            if (frLogic.isResponseOfFeedbackQuestionVisibleToStudent(question, student)) {
-                questionsWithVisibleResponses.add(question);
+            if (frLogic.isResponseOfFeedbackQuestionVisibleToStudents(question)) {
+                return true;
             }
         }
+
+        StudentAttributes student = studentsLogic.getStudentForEmail(courseId, userEmail);
         
-        // Allow students to view the feedback session
+        // Allow student to view the feedback session
         // if there are any questions with custom feedback paths
-        // where the responses of the questions are visible to the student        
+        // where the responses of the questions are visible to the student
         List<FeedbackQuestionAttributes> questionsWithCustomFeedbackPaths =
-                fqLogic.getFeedbackQuestionsWithCustomFeedbackPaths(
-                        session.getFeedbackSessionName(), session.getCourseId());
+                fqLogic.getFeedbackQuestionsWithCustomFeedbackPaths(feedbackSessionName, courseId);
         for (FeedbackQuestionAttributes question : questionsWithCustomFeedbackPaths) {
             if (frLogic.isResponseOfFeedbackQuestionVisibleToStudent(question, student)) {
-                questionsWithVisibleResponses.add(question);
+                return true;
             }
         }
         
-        return session.isVisible() && !questionsWithVisibleResponses.isEmpty();
+        return false;
     }
     
     /**
