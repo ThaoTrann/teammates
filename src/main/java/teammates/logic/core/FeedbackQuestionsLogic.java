@@ -862,31 +862,4 @@ public final class FeedbackQuestionsLogic {
         }
     }
 
-    public List<FeedbackQuestionAttributes> getFeedbackQuestionsWithCustomFeedbackPathsForStudentGivers(
-            String feedbackSessionName, String courseId) {
-        List<FeedbackQuestionAttributes> questionsWithCustomFeedbackPathsForStudentGivers =
-                new ArrayList<FeedbackQuestionAttributes>();
-        List<FeedbackQuestionAttributes> questionsWithCustomFeedbackPaths =
-                getFeedbackQuestionsWithCustomFeedbackPaths(feedbackSessionName, courseId);
-        for (FeedbackQuestionAttributes question : questionsWithCustomFeedbackPaths) {
-            if (question.isFeedbackPathsGiverTypeStudents() || question.isFeedbackPathsGiverTypeTeams()) {
-                questionsWithCustomFeedbackPathsForStudentGivers.add(question);
-            }
-        }
-        return questionsWithCustomFeedbackPathsForStudentGivers;
-    }
-
-    public List<FeedbackQuestionAttributes> getFeedbackQuestionsWithCustomFeedbackPathsForStudentRecipients(
-            String feedbackSessionName, String courseId) {
-        List<FeedbackQuestionAttributes> questionsWithCustomFeedbackPathsForStudentRecipients =
-                new ArrayList<FeedbackQuestionAttributes>();
-        List<FeedbackQuestionAttributes> questionsWithCustomFeedbackPaths =
-                getFeedbackQuestionsWithCustomFeedbackPaths(feedbackSessionName, courseId);
-        for (FeedbackQuestionAttributes question : questionsWithCustomFeedbackPaths) {
-            if (question.isFeedbackPathsRecipientTypeStudents() || question.isFeedbackPathsRecipientTypeTeams()) {
-                questionsWithCustomFeedbackPathsForStudentRecipients.add(question);
-            }
-        }
-        return questionsWithCustomFeedbackPathsForStudentRecipients;
-    }
 }
