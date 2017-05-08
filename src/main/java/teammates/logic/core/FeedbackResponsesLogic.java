@@ -377,10 +377,9 @@ public final class FeedbackResponsesLogic {
         return question.isResponseVisibleTo(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS)
                 && question.giverType.equals(FeedbackParticipantType.STUDENTS);
     }
-    
+
     /**
-     * Return true if the responses of the question are visible to the student
-     * @param question
+     * Return true if the responses of the question are visible to the student.
      */
     public boolean isResponseOfFeedbackQuestionVisibleToStudent(
             FeedbackQuestionAttributes question, StudentAttributes student) {
@@ -390,11 +389,11 @@ public final class FeedbackResponsesLogic {
 
         if (question.recipientType.equals(FeedbackParticipantType.CUSTOM)) {
             if ((question.hasStudentAsRecipientInFeedbackPaths(student.getEmail())
-                    || question.hasTeamAsRecipientInFeedbackPaths(student.getTeam())) 
+                    || question.hasTeamAsRecipientInFeedbackPaths(student.getTeam()))
                     && question.isResponseVisibleTo(FeedbackParticipantType.RECEIVER)) {
                 return true;
             }
-            
+
             TeamDetailsBundle studentTeamDetails = studentsLogic.getTeamDetailsForStudent(student);
             if (question.isResponseVisibleTo(FeedbackParticipantType.OWN_TEAM_MEMBERS)) {
                 for (StudentAttributes teamMember : studentTeamDetails.students) {
@@ -403,7 +402,7 @@ public final class FeedbackResponsesLogic {
                     }
                 }
             }
-            
+
             if (question.isResponseVisibleTo(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS)) {
                 for (StudentAttributes teamMember : studentTeamDetails.students) {
                     if (question.hasStudentAsRecipientInFeedbackPaths(teamMember.getEmail())) {

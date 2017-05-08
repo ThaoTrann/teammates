@@ -55,9 +55,9 @@ public class EmailGenerator {
 
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
         List<StudentAttributes> students = studentsLogic.getStudentsWithQuestionsToAnswer(session);
-        List<InstructorAttributes> instructors = !students.isEmpty()
-                                                 ? instructorsLogic.getInstructorsForCourse(session.getCourseId())
-                                                 : new ArrayList<InstructorAttributes>();
+        List<InstructorAttributes> instructors = students.isEmpty()
+                                                 ? new ArrayList<InstructorAttributes>()
+                                                 : instructorsLogic.getInstructorsForCourse(session.getCourseId());
 
         List<EmailWrapper> emails = generateFeedbackSessionEmailBases(course, session, students, instructors, template,
                                                                       EmailType.FEEDBACK_OPENING.getSubject());
@@ -276,12 +276,12 @@ public class EmailGenerator {
             students = studentsLogic.getStudentsWithUnansweredQuestions(session);
         } catch (EntityDoesNotExistException e) {
             log.severe("Course " + session.getCourseId() + " does not exist or "
-                    + "Session " + session.getFeedbackSessionName()  + " does not exist");
+                    + "Session " + session.getFeedbackSessionName() + " does not exist");
         }
 
-        List<InstructorAttributes> instructors = !students.isEmpty()
-                                                 ? instructorsLogic.getInstructorsForCourse(session.getCourseId())
-                                                 : new ArrayList<InstructorAttributes>();
+        List<InstructorAttributes> instructors = students.isEmpty()
+                                                 ? new ArrayList<InstructorAttributes>()
+                                                 : instructorsLogic.getInstructorsForCourse(session.getCourseId());
 
         String template = EmailTemplates.USER_FEEDBACK_SESSION_CLOSING;
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
@@ -321,9 +321,9 @@ public class EmailGenerator {
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
 
         List<StudentAttributes> students = studentsLogic.getStudentsWhoCanViewSession(session);
-        List<InstructorAttributes> instructors = !students.isEmpty()
-                                                 ? instructorsLogic.getInstructorsForCourse(session.getCourseId())
-                                                 : new ArrayList<InstructorAttributes>();
+        List<InstructorAttributes> instructors = students.isEmpty()
+                                                 ? new ArrayList<InstructorAttributes>()
+                                                 : instructorsLogic.getInstructorsForCourse(session.getCourseId());
 
         return generateFeedbackSessionEmailBases(course, session, students, instructors, template,
                 EmailType.FEEDBACK_PUBLISHED.getSubject());
@@ -339,9 +339,9 @@ public class EmailGenerator {
         CourseAttributes course = coursesLogic.getCourse(session.getCourseId());
 
         List<StudentAttributes> students = studentsLogic.getStudentsWhoCanViewSession(session);
-        List<InstructorAttributes> instructors = !students.isEmpty()
-                                                 ? instructorsLogic.getInstructorsForCourse(session.getCourseId())
-                                                 : new ArrayList<InstructorAttributes>();
+        List<InstructorAttributes> instructors = students.isEmpty()
+                                                 ? new ArrayList<InstructorAttributes>()
+                                                 : instructorsLogic.getInstructorsForCourse(session.getCourseId());
 
         return generateFeedbackSessionEmailBases(course, session, students, instructors, template,
                 EmailType.FEEDBACK_UNPUBLISHED.getSubject());

@@ -717,7 +717,7 @@ public final class StudentsLogic {
         List<StudentAttributes> studentsWithQuestionsToAnswer = new ArrayList<StudentAttributes>();
 
         for (StudentAttributes studentInCourse : studentsInCourse) {
-            boolean isStudentHasQuestionsToAnswer = 
+            boolean isStudentHasQuestionsToAnswer =
                     emailsOfStudentsWithQuestions.contains(studentInCourse.getEmail())
                     || namesOfTeamsWithQuestions.contains(studentInCourse.getTeam());
             if (isStudentHasQuestionsToAnswer) {
@@ -784,7 +784,8 @@ public final class StudentsLogic {
     /**
      * Returns a list of students who have unanswered questions in the feedback session.
      */
-    public List<StudentAttributes> getStudentsWithUnansweredQuestions(FeedbackSessionAttributes session) throws EntityDoesNotExistException {
+    public List<StudentAttributes> getStudentsWithUnansweredQuestions(
+            FeedbackSessionAttributes session) throws EntityDoesNotExistException {
         String feedbackSessionName = session.getFeedbackSessionName();
         String courseId = session.getCourseId();
 
@@ -797,7 +798,7 @@ public final class StudentsLogic {
         for (StudentAttributes studentInCourse : studentsInCourse) {
             for (FeedbackQuestionAttributes feedbackQuestion : feedbackQuestions) {
                 String studentEmail = studentInCourse.getEmail();
-                boolean isQuestionForStudentToAnswer = 
+                boolean isQuestionForStudentToAnswer =
                         feedbackQuestion.giverType == FeedbackParticipantType.STUDENTS
                         || feedbackQuestion.giverType == FeedbackParticipantType.TEAMS
                         || feedbackQuestion.giverType == FeedbackParticipantType.CUSTOM

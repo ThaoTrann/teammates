@@ -578,7 +578,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
     }
 
-    public void testIsResponseOfFeedbackQuestionVisibleToStudent() {
+    private void testIsResponseOfFeedbackQuestionVisibleToStudent() {
         StudentAttributes student;
         FeedbackQuestionAttributes fq;
 

@@ -209,8 +209,7 @@ public final class FeedbackQuestionsLogic {
     }
 
     /**
-     * Gets questions with custom feedback paths from the given session
-     * @throws EntityDoesNotExistException 
+     * Gets questions with custom feedback paths from the given session.
      */
     public List<FeedbackQuestionAttributes> getFeedbackQuestionsWithCustomFeedbackPaths(
             String feedbackSessionName, String courseId) {
