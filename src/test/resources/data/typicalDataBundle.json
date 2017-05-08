@@ -982,7 +982,7 @@
         "questionMetaData":{
             "value":"A particular student's feedback about another student's progress"
         },
-        "questionNumber":"7",
+        "questionNumber": 7,
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1010,7 +1010,7 @@
         "questionMetaData":{
             "value":"A particular student's feedback about another student's progress"
         },
-        "questionNumber":"8",
+        "questionNumber": 8,
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1038,7 +1038,7 @@
         "questionMetaData":{
             "value":"A particular instructor's feedback about their own progress"
         },
-        "questionNumber":"9",
+        "questionNumber": 9,
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1072,7 +1072,7 @@
         "questionMetaData":{
             "value":"A particular team's feedback about their own progress"
         },
-        "questionNumber":"10",
+        "questionNumber": 10,
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
@@ -1106,7 +1106,7 @@
         "questionMetaData":{
             "value":"A particular team's feedback about another team's progress"
         },
-        "questionNumber":"11",
+        "questionNumber": 11,
         "questionType":"TEXT",
         "giverType":"CUSTOM",
         "recipientType":"CUSTOM",
